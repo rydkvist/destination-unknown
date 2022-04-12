@@ -1,39 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { fetchCountries } from "../api/countries/countries";
-import { Country } from "../api/countries/types";
+import { useDestinationsContext } from "../../context/DestinationsProvider";
 
 const Explorer: NextPage = () => {
-  // TODO: Use React Query
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [randomCountry, setRandomCountry] = useState<Country | undefined>(
-    undefined
-  );
-
-  const updateRandomCountry = useCallback(() => {
-    const randomIndex = Math.floor(Math.random() * countries.length);
-    setRandomCountry(countries[randomIndex]);
-  }, [countries]);
-
-  useEffect(() => {
-    if (countries.length === 0) {
-      fetchCountries()
-        .then((countriesResponse) => {
-          setCountries(countriesResponse);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [countries, updateRandomCountry]);
-
-  useEffect(() => {
-    if (randomCountry === undefined) {
-      updateRandomCountry();
-    }
-  }, [countries, randomCountry, updateRandomCountry]);
+  const { countries, randomCountry, updateRandomCountry } =
+    useDestinationsContext();
 
   return (
     <>
@@ -55,7 +27,7 @@ const Explorer: NextPage = () => {
           <div className="inline-flex rounded-md shadow mt-8">
             <a
               onClick={updateRandomCountry}
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-emerald-500 bg-white hover:bg-emerald-50"
+              className="inline-flex items-center cursor-pointer justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-emerald-500 bg-white hover:bg-emerald-50"
             >
               New destination
             </a>
