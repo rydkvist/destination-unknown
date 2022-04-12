@@ -7,6 +7,20 @@ const Explorer: NextPage = () => {
   const { countries, randomCountry, updateRandomCountry } =
     useDestinationsContext();
 
+  const getRandomCountryText = (): string => {
+    if (randomCountry === undefined) {
+      return "...";
+    }
+
+    return (
+      randomCountry.flag +
+      " " +
+      randomCountry.name.common +
+      " " +
+      randomCountry.flag
+    );
+  };
+
   return (
     <>
       <Head>
@@ -20,7 +34,7 @@ const Explorer: NextPage = () => {
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             <span className="block mb-4">Your next destination will be...</span>
             <span className="block text-emerald-500 text-4xl uppercase">
-              {randomCountry?.name?.common ?? "..."}
+              {getRandomCountryText()}
             </span>
           </h2>
 
