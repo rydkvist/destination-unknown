@@ -1,7 +1,9 @@
 import { Country } from "./types";
 
+export const COUNTRIES_API_ENDPOINT = "https://restcountries.com/v3.1";
+
 export const fetchCountries = async (): Promise<Country[]> => {
-  return await fetch("https://restcountries.com/v3.1/all")
+  return await fetch(COUNTRIES_API_ENDPOINT + "/all")
     .then((res) => res.json())
     .then((data: Country[]) => data);
 };
@@ -9,7 +11,7 @@ export const fetchCountries = async (): Promise<Country[]> => {
 export const fetchSpecificCountry = async (
   countryName: string
 ): Promise<Country> => {
-  return await fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+  return await fetch(COUNTRIES_API_ENDPOINT + `/name/${countryName}`)
     .then((res) => res.json())
     .then((data: Country[]) => {
       return data[0];
